@@ -1,0 +1,25 @@
+int vet[10];
+
+int julia(int a, int e, int f) {
+
+	int b;
+  	int c;
+        int d;
+
+        c = a + b;
+	return c;
+}
+
+
+void main(void) {
+
+     int x;
+     int y;
+     x = input();
+     
+     y = julia(x, 1, 0);
+
+    if(y <= x) {
+	   output(y);
+   }
+}

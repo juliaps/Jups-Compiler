@@ -1,0 +1,21 @@
+main
+  nop
+  mov r0 r31
+  in m31
+  out m31
+  load m31 r1 r0
+  push r1
+  addi r31 r31 1
+  in m31
+  out m31
+  load m31 r2 r0
+  push r2
+  addi r31 r31
+  pop r3
+  subi r31 r31 1
+  store m31 r3 0
+  out m31
+  pop r3
+  subi r31 r31 1
+  store m31 r3 0
+  out m31

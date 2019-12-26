@@ -1,0 +1,18 @@
+int teste(int x, int y, int s){
+
+   int k;
+   k = x*y;
+   return k;
+}
+void main(void){
+
+  int a;
+  int b;
+  int c;
+
+  a = input();
+  b = input();
+  c = teste(a,b);
+  output(c);
+
+}
