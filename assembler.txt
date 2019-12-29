@@ -1,0 +1,19 @@
+   mov r0 r31
+   j main
+main
+   addi r31 r31 1
+   push r28
+   in r31
+   out r31
+   load r1 r0 1 
+   store t0 r0 1 
+   in r31
+   out r31
+   load r2 r0 2 
+   store t1 r0 2 
+   load r3 r0 1 
+   load r4 r0 2 
+   add t2 r3 r4 
+   load r5 r0 3 
+   store t2 r0 3 
+   halt

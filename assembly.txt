@@ -1,77 +1,35 @@
-
-Arvore Sintatica:
-  TIPO: INT* 
-    FUNCAO_DECLARADA: julia
-      TIPO: INT[1]
-        VARIAVEL: a
-      TIPO: INT[1]
-        VARIAVEL: b
-      TIPO: INT[1]
-        VARIAVEL: c
-      ATRIBUICAO: 
-        IDENTIFICADOR: c
-        OPERACAO: +
-          IDENTIFICADOR: a
-          IDENTIFICADOR: b
-      RETURN
-        IDENTIFICADOR: c
-  TIPO: VOID* 
-    FUNCAO_DECLARADA: main
-      TIPO: VOID[1]
-      TIPO: INT[1]
-        VARIAVEL: x
-      TIPO: INT[1]
-        VARIAVEL: y
-      ATRIBUICAO: 
-        IDENTIFICADOR: x
-        CHAMA_FUNCAO: input
-      ATRIBUICAO: 
-        IDENTIFICADOR: y
-        CHAMA_FUNCAO: julia
-          IDENTIFICADOR: x
-
-Construindo a tabela de simbolos...
-
-Tabela de Simbolos:
-
-Nome da Variavel  Localizaçao  Escopo          TipoID   Tipo Dado  Parametros  Numeros das linhas
------------------ -----------  ------          ------   ---------- ----------- -------------------
-main              3             global           Fun      Void       0            18 
-input             6             main             Fun      Void       0            14 
-a                 1             julia            Var      Integer    0             1    5 
-b                 1             julia            Var      Integer    0             2    5 
-c                 2             julia            Var      Integer    0             3    5    6 
-x                 4             main             Var      Integer    0            12   14   16 
-y                 5             main             Var      Integer    0            13   16 
-julia             0             global           Fun      Integer    0             7   16 
-  mov r0 r31
-  j main
-julia
-   pop r28
-   subi r31 r31 1
-   addi r31 r31 1
-   push r28
-   load m1 r1 r0
-   load m1 r2 r0
-   add t0 r1 r2 
-   load m2 r3 r0
-   store m2 t0 r0 
-   load m2 r28 r0
-   pop r28
-   jr r30
+   mov r0 r31
+   j main
 main
+   load r1 r0 3 
+   loadi r2 1
+   store r2 r0 3 
+   in t0
+   out t0
+   load r2 r0 1 
+   store t0 r0 1 
+   load r3 r0 2 
+   loadi r4 1
+   store r4 r0 2 
+label L1
+   load r4 r0 2 
+   load r5 r0 1 
+   slet t1 r4 r5 
+   beq t1 r0 L2
+   load r6 r0 3 
+   load r7 r0 2 
+   mult t2 r6 r7 
+   load r8 r0 3 
+   store t2 r0 3 
+   load r9 r0 2 
+   loadi r10 1
+   add t3 r9 r10 
+   load r10 r0 2 
+   store t3 r0 2 
+   j L1
+label L2
+   load r11 r0 3
    addi r31 r31 1
    push r28
-   in m31
-  out m31
-   load m31 t1 r0
-   load m4 r4 r0
-   store m4 t1 r0 
-   load m4 r5 r0
-   push r28
-   addi r31 r31 1
-   jal julia 23
-   mov t2 r28
-   load m5 r5 r0
-   store m5 t2 r0 
+   out r11
    halt

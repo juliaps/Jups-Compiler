@@ -138,10 +138,15 @@ File.open("assembly.txt").each do |line|
       end
     when "loadi"
       begin
-        opcode = "010110"
+        opcode = "010110" # 010110
         dr = zeros_complete(dec_to_bin(regs[op1]), 5)
         sa = zeros_complete(dec_to_bin(0), 5)
-        im = zeros_complete(dec_to_bin(op2),16)
+        if op2 == "proximo_pc"
+          pc = count_line + 2
+          im = zeros_complete(dec_to_bin(pc), 16)
+        else
+          im = zeros_complete(dec_to_bin(op2),16)
+        end
         type_inst = "i"
         f_print = 1
       end
@@ -157,7 +162,7 @@ File.open("assembly.txt").each do |line|
     when "j"
       begin
         opcode = "001110"
-        endr = labels[op1].to_i + 1
+        endr = labels[op1].to_i
         dr = zeros_complete(dec_to_bin(0), 5)
         sa = zeros_complete(dec_to_bin(0), 5)
         im = zeros_complete(dec_to_bin(endr),16)
@@ -186,15 +191,15 @@ File.open("assembly.txt").each do |line|
       begin
         opcode = "001101"
         dr = zeros_complete(dec_to_bin(0), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        sb = zeros_complete(dec_to_bin(regs[op1]), 5)
+        sa = zeros_complete(dec_to_bin(regs[op1]), 5)
+        sb = zeros_complete(dec_to_bin(0), 5)
         type_inst = "r"
         f_print = 1
       end
     when "jal"
       begin
         opcode = "001111"
-        endr = labels[op1].to_i + 1
+        endr = labels[op1].to_i 
         dr = zeros_complete(dec_to_bin(0), 5)
         sa = zeros_complete(dec_to_bin(0), 5)
         im = zeros_complete(dec_to_bin(endr),16)
@@ -204,11 +209,11 @@ File.open("assembly.txt").each do |line|
     when "beq"
       begin
         opcode = "010000"
-        endr = labels[op3].to_i + 1
+        endr = labels[op3].to_i 
         dr = zeros_complete(dec_to_bin(regs[op1]), 5)
         sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(endr),16)
-        type_inst = "r"
+        im = zeros_complete(dec_to_bin(endr),16)
+        type_inst = "i"
         f_print = 1
       end
     when "slt"
@@ -229,14 +234,32 @@ File.open("assembly.txt").each do |line|
         type_inst = "r"
         f_print = 1
       end
+    when "slet"
+      begin
+        opcode = "010111" # 010110
+        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
+        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        type_inst = "r"
+        f_print = 1
+      end
+    when "sget"
+      begin
+        opcode = "011000"
+        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
+        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        type_inst = "r"
+        f_print = 1
+      end
     when "bneq"
       begin
         opcode = "010001"
-        endr = labels[op3].to_i + 1
+        endr = labels[op3].to_i
         dr = zeros_complete(dec_to_bin(regs[op1]), 5)
         sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(endr),16)
-        type_inst = "r"
+        im = zeros_complete(dec_to_bin(endr),16)
+        type_inst = "i"
         f_print = 1
       end
     when "in"

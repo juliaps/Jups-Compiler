@@ -451,17 +451,16 @@ static void cGen(TreeNode * tree) {
     }
 }
 
-void codeGen(TreeNode * syntaxTree, char * codefile)
-{
+void codeGen(TreeNode * syntaxTree, char * codefile) {
       cGen(syntaxTree);
       /* Para finalizar o algoritmo */
       instrucaoAtual = HALT;
       insertQuad(createQuad(instrucaoAtual,NULL,NULL,NULL));
     //  printSymTab(listing);
-      printf("\n**************************** Código Intermediário ****************************\n\n");
-      printIntermediateCode();
-      printf("\n*************************Código Assembly************************\n\n");
-      printf("  mov r0 r31\n");
-      printf("  j main\n");
+      //printf("\n**************************** Código Intermediário ****************************\n\n");
+      //printIntermediateCode();
+      //printf("\n*************************Código Assembly************************\n\n");
+      printf("   mov r0 r31\n");
+      printf("   j main\n");
       cAssembly(getCodigoIntermediario());
 }

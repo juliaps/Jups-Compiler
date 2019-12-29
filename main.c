@@ -68,12 +68,12 @@ int main( int argc, char * argv[] )
 #else
   syntaxTree = parse();
   if (TraceParse) {
-    fprintf(listing,"\nArvore Sintatica:\n");
-    printTree(syntaxTree);
+    //fprintf(listing,"\nArvore Sintatica:\n");
+    //printTree(syntaxTree);
   }
 #if !NO_ANALYZE
   if (! Error)
-  { if (TraceAnalyze) fprintf(listing,"\nConstruindo a tabela de simbolos...\n");
+  { if (TraceAnalyze)// fprintf(listing,"\nConstruindo a tabela de simbolos...\n");
     buildSymtab(syntaxTree);
   }
 #if !NO_CODE

@@ -14,6 +14,7 @@ int p_reg = 1;
 int p_mem;
 int linha = 0;
 int n = 16;
+int pc_salvo;
 char funcao_atual[50];
 
 
@@ -74,8 +75,6 @@ void tipo_r(Quadruple q, char *inst){
       if(strcmp(inst, "store") == 0){
         op = q->op2;
         i = 1;
-        p_mem = st_lookup(q->op1->contents.variable.name, funcao_atual);
-        printf("m%d ", p_mem); //rever isso aqui 
       }else{
         op = q->op1;
         i = 0;
@@ -87,7 +86,9 @@ void tipo_r(Quadruple q, char *inst){
     }
   }
   if(strcmp(inst,"store")==0){
-    printf("r0 ");
+    p_mem = st_lookup(q->op1->contents.variable.name, funcao_atual);
+    printf("r0 %d ", p_mem); //rever isso aqui 
+    
   }
   printf("\n");
 }
@@ -179,9 +180,9 @@ void cAssembly(Quadruple  q){
       break;
       case CALL:
         if(strcmp("input", q->op1->contents.variable.name) == 0){
-          printf("   in r31\n");
+          printf("   in %s\n", q->op3->contents.variable.name);
           linha++;
-          printf("   out r31\n");
+          printf("   out %s\n", q->op3->contents.variable.name);
           linha++;
         }else if (strcmp("output", q->op1->contents.variable.name) == 0){
             //printf("   pop r%d\n", p_reg);
@@ -196,9 +197,12 @@ void cAssembly(Quadruple  q){
         } else if (strcmp("bios_to_mem", q->op1->contents.variable.name) == 0){
         } else if (strcmp("get_pc", q->op1->contents.variable.name) == 0){
         } else {
-          printf("   jal %s %d\n",  q->op1->contents.variable.name, linha+1);
+          //pc_salvo = linha + 4;
+          printf("   loadi r30 proximo_pc\n");
           linha++;
-          printf("   mov %s r28\n" ,  q->op3->contents.variable.name);
+          printf("   j %s\n",  q->op1->contents.variable.name);
+          linha++;
+          printf("   mov %s r29\n" ,  q->op3->contents.variable.name);
         }
       break;
       case PARAM:
@@ -218,27 +222,31 @@ void cAssembly(Quadruple  q){
           printf("   loadi r%d %d\n",  p_reg, q->op1->contents.val);
           linha++;
         }
-        printf("   push r28\n");
-        linha++;
         printf("   addi r31 r31 1\n");
         linha++;
+        printf("   push r28\n");
+        linha++;
+        
       break;
       case RTN:
-        if(q->op1->kind == String){
-          if(q->op1->contents.variable.t == 0){
-            p_mem = st_lookup(q->op1->contents.variable.name, funcao_atual);
-            printf("   load r28 r0 %d\n", p_mem); // carrega o retorno armazenado na memoria para o registrador 28 
-            linha++;
+        if(q->op1 != NULL) {
+          if(q->op1->kind == String){
+            if(q->op1->contents.variable.t == 0){
+              p_mem = st_lookup(q->op1->contents.variable.name, funcao_atual);
+              printf("   load r29 r0 %d\n", p_mem); // carrega o retorno armazenado na memoria para o registrador 28 
+              linha++;
+            }else{
+              printf("   mov r29 %s\n",  q->op1->contents.variable.name);
+              linha++;
+            }
           }else{
-            printf("   mov r28 %s\n",  q->op1->contents.variable.name);
+            printf("   loadi r29 %d\n", q->op1->contents.val);
             linha++;
           }
-        }else{
-          printf("   loadi r28 %d\n", q->op1->contents.val);
-          linha++;
+          
         }
-        printf("   pop r28\n");
-        linha++;
+       // printf("   pop r30\n");
+        //linha++;
         printf("   jr r30\n");
         linha++;
       break;
@@ -279,12 +287,13 @@ void cAssembly(Quadruple  q){
           linha++;
           k++;
         }
-        printf("   addi r31 r31 1\n");
-        linha++;
-        printf("   push r28\n");
-        linha++;
+        //printf("   addi r31 r31 1\n");
+        //linha++;
+        //printf("   push r30\n");
+        //linha++;
       break;
       case ASG:
+        //printf("op1: %s\n", q->op1->contents.variable.name);
         if(q->op1->contents.variable.t == 1){
             tipo_r(q,"mov");
         }else{
@@ -292,7 +301,6 @@ void cAssembly(Quadruple  q){
         }
       break;
       case VEC_ADDR:
-
         if(q->op2->kind == String){
           if(q->op2->contents.variable.t == 0){
             p_mem = st_lookup(q->op2->contents.variable.name, funcao_atual);
@@ -303,21 +311,39 @@ void cAssembly(Quadruple  q){
             linha++;
           }
         }else{
-          printf("   addi r27 r0 %d\n",  q->op2->contents.val);
+          printf("   loadi r27 %d\n",  q->op2->contents.val);
           linha++;
         }
         p_mem = st_lookup(q->op3->contents.variable.name, funcao_atual);
+        //printf("posicao da memoria do vetor %d\n", p_mem );
         //VERIFICAR SE O VETOR VAI COMEÇAR POR ZERO E SE PRECISA SOMAR
         printf("   addi %s r27 %d  \n", q->op1->contents.variable.name,p_mem ); //verificar se todas as posições de operações estao de acordo com o processador
         linha++;
       break;
 
       case VEC_ASG: //store vai ser a posicao da memoria o registrador de onde vai pegar o valor e o registrador que contem o valor que vai ser somado com a posição da memoria
-        printf("   store %s r0 %s\n",  q->op2->contents.variable.name, q->op1->contents.variable.name);
-        linha++; // verificar quem é op1 e op2
+        if(q->op2->kind == String) {
+          if(q->op2->contents.variable.t == 0){
+            p_mem = st_lookup(q->op2->contents.variable.name, funcao_atual);
+            printf("   load r%d r0 %d \n", p_reg, p_mem);
+            linha++;
+            printf("   store r%d %s 0\n", p_reg, q->op1->contents.variable.name);
+            p_reg = (p_reg + 1)%n;
+            linha++;
+          } else {
+            printf("   store %s %s 0\n",  q->op2->contents.variable.name, q->op1->contents.variable.name);
+            linha++;
+          }
+        } else {
+          printf("   loadi r%d %d\n", p_reg, q->op2->contents.val);
+          linha++;
+          printf("   store r%d %s 0\n", p_reg, q->op1->contents.variable.name);
+          linha++;
+          p_reg = (p_reg + 1)%n;
+        }
       break;
       case VEC: //load vai ser a posicao da memoria o registrador que vai ser armazenado o valor e o registrador qeu contem o valor que vai ser somado com a posição da memoria
-        printf("   load  %s r0 %s\n",q->op1->contents.variable.name, q->op2->contents.variable.name);
+        printf("   load %s %s 0 \n",q->op1->contents.variable.name, q->op2->contents.variable.name);
         linha++; // verificar quem é op1 e op2
       break;
       default:

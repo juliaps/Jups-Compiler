@@ -185,8 +185,8 @@ void buildSymtab(TreeNode * syntaxTree)
   traverse(syntaxTree,insertNode,nullProc);
   if (TraceAnalyze)
   { checkMain();
-    fprintf(listing,"\nTabela de Simbolos:\n\n");
-    printSymTab(listing);
+    //fprintf(listing,"\nTabela de Simbolos:\n\n");
+    //printSymTab(listing);
   }
 }
 
