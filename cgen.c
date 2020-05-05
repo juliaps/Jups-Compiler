@@ -134,7 +134,7 @@ static char * createLabelName() {
 static char * createTemporaryOperandName() {
     char * temp = (char *) malloc(5);
     sprintf(temp, "t%d", temporario);
-    ++temporario;
+    temporario = (temporario+1)%10;
     return temp;
 }
 
@@ -458,7 +458,7 @@ void codeGen(TreeNode * syntaxTree, char * codefile) {
       insertQuad(createQuad(instrucaoAtual,NULL,NULL,NULL));
     //  printSymTab(listing);
       //printf("\n**************************** Código Intermediário ****************************\n\n");
-      //printIntermediateCode();
+      printIntermediateCode();
       //printf("\n*************************Código Assembly************************\n\n");
       printf("   mov r0 r31\n");
       printf("   j main\n");

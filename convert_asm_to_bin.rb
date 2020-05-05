@@ -46,7 +46,8 @@ File.open("assembly.txt").each do |line|
   end
 end
 
-count_line = 0
+input = gets
+count_line = input.to_i
 f_print = 0
 
 regs = {
@@ -76,7 +77,7 @@ regs = {
   "r13" =>23,
   "r14" =>24,
   "r15" =>25,
-  "r16" =>26,
+  "r26" =>26,
   "r27" =>27,
   "r28" =>28,
   "r29" =>29,
@@ -323,6 +324,69 @@ File.open("assembly.txt").each do |line|
         sa = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(0),16)
         type_inst = "i"
+        f_print = 1
+      end
+    when "syscall"
+      begin
+        opcode = "011001"
+        dr = zeros_complete(dec_to_bin(26), 5)
+        sa = zeros_complete(dec_to_bin(0), 5)
+        im = zeros_complete(dec_to_bin(op2),16)        
+        type_inst = "i"
+        f_print = 1 
+      end
+    when "setprocpc"
+      begin
+        opcode = "011010"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(op1),5)
+        sb = zeros_complete(dec_to_bin(op2),5)
+        type_inst = "r"
+        f_print = 1
+      end
+    when "enablewriteproc"
+       begin
+        opcode = "011011"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(0),5)
+        sb = zeros_complete(dec_to_bin(0),5)
+        type_inst = "r"
+        f_print = 1
+      end
+    when "enablereadproc"
+       begin
+        opcode = "011100"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(0),5)
+        sb = zeros_complete(dec_to_bin(0),5)
+        type_inst = "r"
+        f_print = 1
+      end
+     when "disablereadproc"
+       begin
+        opcode = "011101"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(0),5)
+        sb = zeros_complete(dec_to_bin(0),5)
+        type_inst = "r"
+        f_print = 1 
+      end
+    when "disablewriteproc"
+       begin
+        opcode = "011110"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(0),5)
+        sb = zeros_complete(dec_to_bin(0),5)
+        type_inst = "r"
+        f_print = 1 
+      end
+    when "setsopc"
+      begin
+        opcode = "011111"
+        dr = zeros_complete(dec_to_bin(0),5)
+        sa = zeros_complete(dec_to_bin(op1),5)
+        sb = zeros_complete(dec_to_bin(op2),5)
+        type_inst = "r"
         f_print = 1
       end
     else

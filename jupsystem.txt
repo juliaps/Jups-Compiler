@@ -1,0 +1,112 @@
+/* JupSystem
+ de inicio os codigos estarao ja na memoria de instrução
+*/ 
+
+/*declaraçao de variaveis*/
+void main(void) {
+	 
+	int processstatus[3];
+	int processpc[3];
+	int i;
+	int currentprocess;
+	int numprocess;
+	int processfinished;
+	int interruption;
+	int ioprocess;
+	int changeprocess;
+	int process;
+	changeprocess = 1;
+	numprocess = 3;
+	processfinished = 0;
+	i = 0;
+
+	/* init */
+	/*processmemstart[0] = 28;
+	processmemstart[1] = 66;
+	processmemstart[2] = 106;*/
+	processpc[0] = 564;
+	processpc[1] = 604;
+	processpc[2] = 656;
+	processstatus[0] = 0;
+	processstatus[1] = 0;
+	processstatus[2] = 0;
+
+	
+	/* escalonamento de processos */
+	currentprocess = 0;
+	while(processfinished < numprocess) {
+		output(50);
+		interruption = getinterruption();
+		if(interruption == 1) { /* end program */
+			processstatus[currentprocess]  = 1; /* finished */
+			processfinished = processfinished + 1;
+			changeprocess = 1;
+			process = currentprocess + 901;
+			output(process);
+			
+		} else if(interruption == 2) { /* input */
+			
+			ioprocess = input();
+			setinput(ioprocess);
+			if (currentprocess == 1) {
+				cpyrbtomem(25);
+			} else if (currentprocess == 2) {
+				cpyrbtomem(63);
+			} else if (currentprocess == 3) {
+				cpyrbtomem(103);
+			}
+			/*while(i < 32) {
+				cpyrbtomem(processmemstart[currentprocess]+ i, i);
+				i = i + 1;
+			}*/
+			processpc[currentprocess] = getpc();
+			changeprocess = 1;
+		} else if (interruption == 3) { /* output */
+			ioprocess = getoutput();
+			output(ioprocess);
+			if (currentprocess == 1) {
+				cpyrbtomem(25);
+			} else if (currentprocess == 2) {
+				cpyrbtomem(63);
+			} else if (currentprocess == 3) {
+				cpyrbtomem(103);
+			}
+			/*while(i < 32) { 
+				cpyrbtomem(processmemstart[currentprocess]+ i, i);
+				i = i + 1;
+			}*/
+			processpc[currentprocess] = getpc();
+			changeprocess = 1;
+		}
+
+		if(changeprocess == 1) {
+			currentprocess = currentprocess + 1;
+			if(currentprocess == numprocess) {
+				currentprocess = 0;
+			}
+			while(processstatus[currentprocess] == 1) {
+				currentprocess = currentprocess + 1;
+				if(currentprocess == numprocess) {
+					currentprocess = 0;
+				}
+			}
+			if (currentprocess == 1) {
+				cpymemtorb(25);
+			} else if (currentprocess == 2) {
+				cpymemtorb(63);
+			} else if (currentprocess == 3) {
+				cpymemtorb(103);
+			}
+			
+			/*while (i < 32) {
+				cpymemtorb(i, processmemstart[currentprocess] + i);
+				i = i + 1;
+			}*/
+			setpc(processpc[currentprocess]);
+			process = currentprocess + 701;
+			output(process);
+			changeprocess = 0;
+			execprocess();
+		}
+	}
+}

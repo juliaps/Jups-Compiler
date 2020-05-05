@@ -1,0 +1,21 @@
+void main(void) {
+	int i;
+	int num;
+	int fibo;
+	int fiboant;
+	int aux;
+
+	i = 1;
+	fibo = 1;
+	fiboant = 1;
+	num = input();
+
+	while(i < num) {
+		output(fibo);
+		aux = fibo;
+		fibo = fibo + fiboant;
+		fiboant = aux;
+		i = i + 1;
+	}
+
+}

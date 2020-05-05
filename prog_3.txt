@@ -1,0 +1,18 @@
+void main(void) {
+	int num;
+	int exp;
+	int result;
+	int i;
+
+	i = 0;
+	result = 1;
+	num = input();
+	exp = input();
+
+	while(i < exp) {
+		result = num * result;
+		i = i + 1;
+	}
+	
+	output(result);
+}
