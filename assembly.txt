@@ -1,35 +1,592 @@
    mov r0 r31
    j main
 main
-   load r1 r0 3 
+   load r1 r0 13 
    loadi r2 1
-   store r2 r0 3 
-   in t0
-   out t0
-   load r2 r0 1 
-   store t0 r0 1 
-   load r3 r0 2 
-   loadi r4 1
-   store r4 r0 2 
+   store r2 r0 13 
+   load r2 r0 9 
+   loadi r3 3
+   store r3 r0 9 
+   load r3 r0 10 
+   loadi r4 0
+   store r4 r0 10 
+   load r4 r0 7 
+   loadi r5 0
+   store r5 r0 7 
+   loadi r27 0
+   addi t0 r27 4  
+   loadi r5 564
+   store r5 t0 0
+   loadi r27 1
+   addi t1 r27 4  
+   loadi r6 604
+   store r6 t1 0
+   loadi r27 2
+   addi t2 r27 4  
+   loadi r7 656
+   store r7 t2 0
+   loadi r27 0
+   addi t3 r27 1  
+   loadi r8 0
+   store r8 t3 0
+   loadi r27 1
+   addi t4 r27 1  
+   loadi r9 0
+   store r9 t4 0
+   loadi r27 2
+   addi t5 r27 1  
+   loadi r10 0
+   store r10 t5 0
+   load r1 r0 8 
+   loadi r2 0
+   store r2 r0 8 
 label L1
-   load r4 r0 2 
-   load r5 r0 1 
-   slet t1 r4 r5 
-   beq t1 r0 L2
-   load r6 r0 3 
-   load r7 r0 2 
-   mult t2 r6 r7 
-   load r8 r0 3 
-   store t2 r0 3 
-   load r9 r0 2 
+   load r2 r0 10 
+   load r3 r0 9 
+   slt t6 r2 r3 
+   beq t6 r0 L2
+   loadi r28 50
+   addi r31 r31 1
+   push r28 r31 0
+   pop r28 r31 0
+   subi r31 r31 1
+   out r28
+   mov t8 r26
+   load r4 r0 11 
+   store t8 r0 11 
+    load r5 r0 11
+    loadi r6 1
+    bneq r5 v6 L3
+   beq t9 r0 L3
+   load r27 r0 8
+   addi t0 r27 1  
+   loadi r6 1
+   store r6 t0 0
+   load r7 r0 10 
+   loadi r8 1
+   add t1 r7 r8 
+   load r8 r0 10 
+   store t1 r0 10 
+   load r9 r0 13 
    loadi r10 1
-   add t3 r9 r10 
-   load r10 r0 2 
-   store t3 r0 2 
+   store r10 r0 13 
+   load r10 r0 8 
+   loadi r1 901
+   add t2 r10 r1 
+   load r1 r0 14 
+   store t2 r0 14 
+   load r28 r0 14
+   addi r31 r31 1
+   push r28 r31 0
+   pop r28 r31 0
+   subi r31 r31 1
+   out r28
+   j L4
+label L3
+    load r2 r0 11
+    loadi r3 2
+    bneq r2 v3 L5
+   beq t4 r0 L5
+   in t5
+   out t5
+   load r3 r0 12 
+   store t5 r0 12 
+   load r28 r0 12
+   addi r31 r31 1
+   push r28 r31 0
+   pop r14 r31 0
+   subi r31 r31 1
+   enablewriteproc
+   mov r26 r14
+   disablewriteproc
+    load r4 r0 8
+    loadi r5 1
+    bneq r4 v5 L6
+   beq t7 r0 L6
+   loadi r28 25
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 25
+   store r1 r0 26
+   store r2 r0 27
+   store r3 r0 28
+   store r4 r0 29
+   store r5 r0 30
+   store r6 r0 31
+   store r7 r0 32
+   store r8 r0 33
+   store r9 r0 34
+   store r10 r0 35
+   store r11 r0 36
+   store r12 r0 37
+   store r13 r0 38
+   store r14 r0 39
+   store r15 r0 40
+   store r16 r0 41
+   store r17 r0 42
+   store r18 r0 43
+   store r19 r0 44
+   store r20 r0 45
+   store r21 r0 46
+   store r22 r0 47
+   store r23 r0 48
+   store r24 r0 49
+   store r25 r0 50
+   store r26 r0 51
+   store r27 r0 52
+   store r28 r0 53
+   store r29 r0 54
+   store r30 r0 55
+   store r31 r0 56
+   disablereadproc
+   j L7
+label L6
+    load r5 r0 8
+    loadi r6 2
+    bneq r5 v6 L8
+   beq t9 r0 L8
+   loadi r28 63
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 63
+   store r1 r0 64
+   store r2 r0 65
+   store r3 r0 66
+   store r4 r0 67
+   store r5 r0 68
+   store r6 r0 69
+   store r7 r0 70
+   store r8 r0 71
+   store r9 r0 72
+   store r10 r0 73
+   store r11 r0 74
+   store r12 r0 75
+   store r13 r0 76
+   store r14 r0 77
+   store r15 r0 78
+   store r16 r0 79
+   store r17 r0 80
+   store r18 r0 81
+   store r19 r0 82
+   store r20 r0 83
+   store r21 r0 84
+   store r22 r0 85
+   store r23 r0 86
+   store r24 r0 87
+   store r25 r0 88
+   store r26 r0 89
+   store r27 r0 90
+   store r28 r0 91
+   store r29 r0 92
+   store r30 r0 93
+   store r31 r0 94
+   disablereadproc
+   j L9
+label L8
+    load r6 r0 8
+    loadi r7 3
+    bneq r6 v7 L10
+   beq t1 r0 L10
+   loadi r28 103
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 103
+   store r1 r0 104
+   store r2 r0 105
+   store r3 r0 106
+   store r4 r0 107
+   store r5 r0 108
+   store r6 r0 109
+   store r7 r0 110
+   store r8 r0 111
+   store r9 r0 112
+   store r10 r0 113
+   store r11 r0 114
+   store r12 r0 115
+   store r13 r0 116
+   store r14 r0 117
+   store r15 r0 118
+   store r16 r0 119
+   store r17 r0 120
+   store r18 r0 121
+   store r19 r0 122
+   store r20 r0 123
+   store r21 r0 124
+   store r22 r0 125
+   store r23 r0 126
+   store r24 r0 127
+   store r25 r0 128
+   store r26 r0 129
+   store r27 r0 130
+   store r28 r0 131
+   store r29 r0 132
+   store r30 r0 133
+   store r31 r0 134
+   disablereadproc
+label L10
+label L9
+label L7
+   load r27 r0 8
+   addi t3 r27 4  
+   mov t4 r15
+   store t4 t3 0
+   load r7 r0 13 
+   loadi r8 1
+   store r8 r0 13 
+   j L11
+label L5
+    load r8 r0 11
+    loadi r9 3
+    bneq r8 v9 L12
+   beq t5 r0 L12
+   mov t6 r14 
+   load r9 r0 12 
+   store t6 r0 12 
+   load r28 r0 12
+   addi r31 r31 1
+   push r28 r31 0
+   pop r28 r31 0
+   subi r31 r31 1
+   out r28
+    load r10 r0 8
+    loadi r1 1
+    bneq r10 v1 L13
+   beq t8 r0 L13
+   loadi r28 25
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 25
+   store r1 r0 26
+   store r2 r0 27
+   store r3 r0 28
+   store r4 r0 29
+   store r5 r0 30
+   store r6 r0 31
+   store r7 r0 32
+   store r8 r0 33
+   store r9 r0 34
+   store r10 r0 35
+   store r11 r0 36
+   store r12 r0 37
+   store r13 r0 38
+   store r14 r0 39
+   store r15 r0 40
+   store r16 r0 41
+   store r17 r0 42
+   store r18 r0 43
+   store r19 r0 44
+   store r20 r0 45
+   store r21 r0 46
+   store r22 r0 47
+   store r23 r0 48
+   store r24 r0 49
+   store r25 r0 50
+   store r26 r0 51
+   store r27 r0 52
+   store r28 r0 53
+   store r29 r0 54
+   store r30 r0 55
+   store r31 r0 56
+   disablereadproc
+   j L14
+label L13
+    load r1 r0 8
+    loadi r2 2
+    bneq r1 v2 L15
+   beq t0 r0 L15
+   loadi r28 63
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 63
+   store r1 r0 64
+   store r2 r0 65
+   store r3 r0 66
+   store r4 r0 67
+   store r5 r0 68
+   store r6 r0 69
+   store r7 r0 70
+   store r8 r0 71
+   store r9 r0 72
+   store r10 r0 73
+   store r11 r0 74
+   store r12 r0 75
+   store r13 r0 76
+   store r14 r0 77
+   store r15 r0 78
+   store r16 r0 79
+   store r17 r0 80
+   store r18 r0 81
+   store r19 r0 82
+   store r20 r0 83
+   store r21 r0 84
+   store r22 r0 85
+   store r23 r0 86
+   store r24 r0 87
+   store r25 r0 88
+   store r26 r0 89
+   store r27 r0 90
+   store r28 r0 91
+   store r29 r0 92
+   store r30 r0 93
+   store r31 r0 94
+   disablereadproc
+   j L16
+label L15
+    load r2 r0 8
+    loadi r3 3
+    bneq r2 v3 L17
+   beq t2 r0 L17
+   loadi r28 103
+   addi r31 r31 1
+   push r28 r31 0
+   enablereadproc
+   store r0 r0 103
+   store r1 r0 104
+   store r2 r0 105
+   store r3 r0 106
+   store r4 r0 107
+   store r5 r0 108
+   store r6 r0 109
+   store r7 r0 110
+   store r8 r0 111
+   store r9 r0 112
+   store r10 r0 113
+   store r11 r0 114
+   store r12 r0 115
+   store r13 r0 116
+   store r14 r0 117
+   store r15 r0 118
+   store r16 r0 119
+   store r17 r0 120
+   store r18 r0 121
+   store r19 r0 122
+   store r20 r0 123
+   store r21 r0 124
+   store r22 r0 125
+   store r23 r0 126
+   store r24 r0 127
+   store r25 r0 128
+   store r26 r0 129
+   store r27 r0 130
+   store r28 r0 131
+   store r29 r0 132
+   store r30 r0 133
+   store r31 r0 134
+   disablereadproc
+label L17
+label L16
+label L14
+   load r27 r0 8
+   addi t4 r27 4  
+   mov t5 r15
+   store t5 t4 0
+   load r3 r0 13 
+   loadi r4 1
+   store r4 r0 13 
+label L12
+label L11
+label L4
+    load r4 r0 13
+    loadi r5 1
+    bneq r4 v5 L18
+   beq t6 r0 L18
+   load r5 r0 8 
+   loadi r6 1
+   add t7 r5 r6 
+   load r6 r0 8 
+   store t7 r0 8 
+    load r7 r0 8
+    load r8 r0 9
+    bneq r7 r8 L19
+   beq t8 r0 L19
+   load r9 r0 8 
+   loadi r10 0
+   store r10 r0 8 
+label L19
+label L20
+   load r27 r0 8
+   addi t9 r27 1  
+   load t0 t9 0 
+    loadi r10 1
+    bneq t0 v10 L21
+   beq t1 r0 L21
+   load r10 r0 8 
+   loadi r1 1
+   add t2 r10 r1 
+   load r1 r0 8 
+   store t2 r0 8 
+    load r2 r0 8
+    load r3 r0 9
+    bneq r2 r3 L22
+   beq t3 r0 L22
+   load r4 r0 8 
+   loadi r5 0
+   store r5 r0 8 
+label L22
+   j L20
+label L21
+    load r5 r0 8
+    loadi r6 1
+    bneq r5 v6 L23
+   beq t4 r0 L23
+   loadi r28 25
+   addi r31 r31 1
+   push r28 r31 0
+   enablewriteproc
+   load r0 r0 25
+   load r1 r0 26
+   load r2 r0 27
+   load r3 r0 28
+   load r4 r0 29
+   load r5 r0 30
+   load r6 r0 31
+   load r7 r0 32
+   load r8 r0 33
+   load r9 r0 34
+   load r10 r0 35
+   load r11 r0 36
+   load r12 r0 37
+   load r13 r0 38
+   load r14 r0 39
+   load r15 r0 40
+   load r16 r0 41
+   load r17 r0 42
+   load r18 r0 43
+   load r19 r0 44
+   load r20 r0 45
+   load r21 r0 46
+   load r22 r0 47
+   load r23 r0 48
+   load r24 r0 49
+   load r25 r0 50
+   load r26 r0 51
+   load r27 r0 52
+   load r28 r0 53
+   load r29 r0 54
+   load r30 r0 55
+   load r31 r0 56
+   disablewriteproc
+   j L24
+label L23
+    load r6 r0 8
+    loadi r7 2
+    bneq r6 v7 L25
+   beq t6 r0 L25
+   loadi r28 63
+   addi r31 r31 1
+   push r28 r31 0
+   enablewriteproc
+   load r0 r0 63
+   load r1 r0 64
+   load r2 r0 65
+   load r3 r0 66
+   load r4 r0 67
+   load r5 r0 68
+   load r6 r0 69
+   load r7 r0 70
+   load r8 r0 71
+   load r9 r0 72
+   load r10 r0 73
+   load r11 r0 74
+   load r12 r0 75
+   load r13 r0 76
+   load r14 r0 77
+   load r15 r0 78
+   load r16 r0 79
+   load r17 r0 80
+   load r18 r0 81
+   load r19 r0 82
+   load r20 r0 83
+   load r21 r0 84
+   load r22 r0 85
+   load r23 r0 86
+   load r24 r0 87
+   load r25 r0 88
+   load r26 r0 89
+   load r27 r0 90
+   load r28 r0 91
+   load r29 r0 92
+   load r30 r0 93
+   load r31 r0 94
+   disablewriteproc
+   j L26
+label L25
+    load r7 r0 8
+    loadi r8 3
+    bneq r7 v8 L27
+   beq t8 r0 L27
+   loadi r28 103
+   addi r31 r31 1
+   push r28 r31 0
+   enablewriteproc
+   load r0 r0 103
+   load r1 r0 104
+   load r2 r0 105
+   load r3 r0 106
+   load r4 r0 107
+   load r5 r0 108
+   load r6 r0 109
+   load r7 r0 110
+   load r8 r0 111
+   load r9 r0 112
+   load r10 r0 113
+   load r11 r0 114
+   load r12 r0 115
+   load r13 r0 116
+   load r14 r0 117
+   load r15 r0 118
+   load r16 r0 119
+   load r17 r0 120
+   load r18 r0 121
+   load r19 r0 122
+   load r20 r0 123
+   load r21 r0 124
+   load r22 r0 125
+   load r23 r0 126
+   load r24 r0 127
+   load r25 r0 128
+   load r26 r0 129
+   load r27 r0 130
+   load r28 r0 131
+   load r29 r0 132
+   load r30 r0 133
+   load r31 r0 134
+   disablewriteproc
+label L27
+label L26
+label L24
+   load r27 r0 8
+   addi t0 r27 4  
+   load t1 t0 0 
+   mov r28 t1
+   addi r31 r31 1
+   push r28 r31 0
+   pop r15 r31 0
+   subi r31 r31 1
+   load r8 r0 8 
+   loadi r9 701
+   add t3 r8 r9 
+   load r9 r0 14 
+   store t3 r0 14 
+   load r28 r0 14
+   addi r31 r31 1
+   push r28 r31 0
+   pop r28 r31 0
+   subi r31 r31 1
+   out r28
+   load r10 r0 13 
+   loadi r1 0
+   store r1 r0 13 
+   loadi r30 proximo_pc
+   setprocpc r15 r30
+   enablewriteproc
+   enablereadproc
+label L18
    j L1
 label L2
-   load r11 r0 3
-   addi r31 r31 1
-   push r28
-   out r11
    halt

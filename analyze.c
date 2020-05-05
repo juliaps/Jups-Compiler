@@ -12,7 +12,6 @@
 #include "analyze.h"
 #include "util.h"
 /* counter for variable memory locations */
-int location = 0;
 char *escopo;
 int funmain = 0;
 
@@ -133,22 +132,31 @@ static void insertNode( TreeNode * t)
           }
           break;
         case AtivK:
-          if(strcmp(t->attr.name,"output")== 0 || strcmp(t->attr.name,"input") == 0){ //ADICIONAR AS NOVAS FUNCOES
-            if (st_lookup(t->attr.name , escopo) == -1){
-              //primeira vez que a funcao foi chamada
-              st_insert(t->attr.name, t->lineno, location, escopo, FUN, Void);
-              location++;
-            }else{//funcao ja foi chamada entao nao precisa incrementar localizacao na memoria
-              st_insert(t->attr.name, t->lineno, location, escopo, FUN, Void);
-            }
-          }else{
-            if (st_lookup(t->attr.name , escopo) == -1){
-              //Erro : função nao declaradas
-              typeError(t, 2);
-            }
-            else{
-              st_insert(t->attr.name,t->lineno,location, escopo, FUN, t->type);
-            }
+          if(strcmp(t->attr.name,"output") == 0 || 
+             strcmp(t->attr.name,"input") == 0 || 
+             strcmp(t->attr.name, "getinterruption") == 0 ||
+             strcmp(t->attr.name, "setinput") == 0 ||
+             strcmp(t->attr.name, "cpyrbtomem") == 0 ||
+             strcmp(t->attr.name, "getpc") == 0 ||
+             strcmp(t->attr.name, "getoutput") == 0 ||
+             strcmp(t->attr.name, "cpymemtorb") == 0 ||
+             strcmp(t->attr.name, "setpc") == 0 ||
+             strcmp(t->attr.name, "execprocess") == 0) { //ADICIONAR AS NOVAS FUNCOES
+                if (st_lookup(t->attr.name , escopo) == -1){
+                  //primeira vez que a funcao foi chamada
+                  st_insert(t->attr.name, t->lineno, location, escopo, FUN, Void);
+                  location++;
+                }else{//funcao ja foi chamada entao nao precisa incrementar localizacao na memoria
+                  st_insert(t->attr.name, t->lineno, location, escopo, FUN, Void);
+                }
+              }else{
+                if (st_lookup(t->attr.name , escopo) == -1){
+                  //Erro : função nao declaradas
+                  typeError(t, 2);
+                }
+                else{
+                  st_insert(t->attr.name,t->lineno,location, escopo, FUN, t->type);
+                }
           }
 
           break;
@@ -186,7 +194,7 @@ void buildSymtab(TreeNode * syntaxTree)
   if (TraceAnalyze)
   { checkMain();
     //fprintf(listing,"\nTabela de Simbolos:\n\n");
-    //printSymTab(listing);
+    printSymTab(listing);
   }
 }
 

@@ -45,9 +45,26 @@ int TraceAnalyze = TRUE;
 int TraceCode = TRUE;
 
 int Error = FALSE;
+int select_compilation = 0;
+int init_memory_position = 0;
+int location = 0;
+int n = 15;
 
-int main( int argc, char * argv[] )
-{ TreeNode * syntaxTree;
+int main( int argc, char * argv[] ) { 
+
+  printf("0 - S.O.\n1 - Program\n");
+  scanf("%d", &select_compilation);
+  if(select_compilation) {
+    printf("Init Memory Position:\n");
+    scanf("%d", &init_memory_position);
+    location = 32 + init_memory_position;
+    n = 15;
+  } else {
+    init_memory_position = 0;
+    location = 0;
+    n = 11;
+  }
+  TreeNode * syntaxTree;
   char pgm[120]; /* source code file name */
   if (argc != 2)
     { fprintf(stderr,"usage: %s <filename>\n",argv[0]);

@@ -63,6 +63,11 @@ extern FILE* code; /* code text file for TM simulator */
 
 extern int lineno; /* source line number for listing */
 
+extern int select_compilation;
+extern int init_memory_position;
+extern int location;
+extern int n;
+
 /**************************************************/
 /***********   Syntax tree for parsing ************/
 /**************************************************/
