@@ -46,8 +46,7 @@ File.open("assembly.txt").each do |line|
   end
 end
 
-input = gets
-count_line = input.to_i
+count_line = 0
 f_print = 0
 
 regs = {
@@ -77,7 +76,7 @@ regs = {
   "r13" =>23,
   "r14" =>24,
   "r15" =>25,
-  "r26" =>26,
+  "r16" =>26,
   "r27" =>27,
   "r28" =>28,
   "r29" =>29,
@@ -94,171 +93,170 @@ File.open("assembly.txt").each do |line|
   case op_inst
   when "add"
       begin
-        opcode = "000010"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
+        funct = "000000"
         type_inst = "r"
         f_print = 1
       end
     when "sub"
       begin
-        opcode = "000011"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
+        funct = "000001"
         type_inst = "r"
         f_print = 1
       end
     when "mult"
       begin
-        opcode = "000100"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
+        funct = "000010"
         type_inst = "r"
         f_print = 1
       end
     when "div"
       begin
-        opcode = "000101"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
+        funct = "000011"
+        type_inst = "r"
+        f_print = 1
+      end
+    when "inc"
+      begin
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(1), 5)
+        funct = "000100"
+        type_inst = "r"
+        f_print = 1
+      end
+    when "dec"
+      begin
+        opcode = "000000"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(1), 5)
+        funct = "000101"
         type_inst = "r"
         f_print = 1
       end
     when "addi"
       begin
-        opcode = "010100"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        opcode = "000010"
+        rt = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
-    when "loadi"
+    when "loadi" # rever se tbm o imediato pra somar com o endr
       begin
-        opcode = "010110" # 010110
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        if op2 == "proximo_pc"
-          pc = count_line + 2
-          im = zeros_complete(dec_to_bin(pc), 16)
-        else
-          im = zeros_complete(dec_to_bin(op2),16)
-        end
+        opcode = "010110"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(0), 5)
+        im = zeros_complete(dec_to_bin(op2),16)
         type_inst = "i"
         f_print = 1
       end
     when "subi"
       begin
-        opcode = "010101"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        opcode = "010100"
+        rt = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
     when "j"
       begin
-        opcode = "001110"
+        opcode = "000101"
         endr = labels[op1].to_i
-        dr = zeros_complete(dec_to_bin(0), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        im = zeros_complete(dec_to_bin(endr),16)
-        type_inst = "i"
+        rd = zeros_complete(dec_to_bin(0), 10)
+        rs = zeros_complete(dec_to_bin(endr),16)
+        type_inst = "j"
         f_print = 1
       end
-    when "load" # r1 r2 0 => r[r1] = m[r[r2]+ 0]
+    when "lw"
       begin
-        opcode = "000111"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        opcode = "000110"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
-    when "store" # r1 r2 0 => m[r[r2]+ 0] = r[r1] 
-      begin
-        opcode = "001000"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+    when "sw"
+      begin # r1 r2 5
+        opcode = "000111"
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
     when "jr"
       begin
-        opcode = "001101"
-        dr = zeros_complete(dec_to_bin(0), 5)
-        sa = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sb = zeros_complete(dec_to_bin(0), 5)
+        opcode = "010011"
+        rd = zeros_complete(dec_to_bin(0), 5)
+        rs = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rt = zeros_complete(dec_to_bin(0), 5)
         type_inst = "r"
         f_print = 1
       end
     when "jal"
       begin
         opcode = "001111"
-        endr = labels[op1].to_i 
-        dr = zeros_complete(dec_to_bin(0), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        im = zeros_complete(dec_to_bin(endr),16)
-        type_inst = "i"
+        endr = labels[op1].to_i + 1
+        rd = zeros_complete(dec_to_bin(0), 10)
+        rs = zeros_complete(dec_to_bin(endr),16)
+        type_inst = "j"
         f_print = 1
       end
     when "beq"
       begin
         opcode = "010000"
-        endr = labels[op3].to_i 
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        im = zeros_complete(dec_to_bin(endr),16)
+        endr = labels[op3].to_i + 1
+        rt = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
     when "slt"
       begin
         opcode = "010010"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
         type_inst = "r"
         f_print = 1
       end
     when "sgt"
       begin
         opcode = "010011"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
-        type_inst = "r"
-        f_print = 1
-      end
-    when "slet"
-      begin
-        opcode = "010111" # 010110
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
-        type_inst = "r"
-        f_print = 1
-      end
-    when "sget"
-      begin
-        opcode = "011000"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        sb = zeros_complete(dec_to_bin(regs[op3]), 5)
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(regs[op3]), 5)
         type_inst = "r"
         f_print = 1
       end
     when "bneq"
       begin
         opcode = "010001"
-        endr = labels[op3].to_i
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
+        endr = labels[op3].to_i + 1
+        rd = zeros_complete(dec_to_bin(regs[op1]), 5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(endr),16)
         type_inst = "i"
         f_print = 1
@@ -266,126 +264,63 @@ File.open("assembly.txt").each do |line|
     when "in"
       begin
         opcode = "001011"#{ok}
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        im = zeros_complete(dec_to_bin(0), 16)
-        type_inst = "i"
+        rd = zeros_complete(dec_to_bin(0),5)
+        rs = zeros_complete(dec_to_bin(0),5)
+        rt = zeros_complete(dec_to_bin(regs[op1]), 5)
+        type_inst = "r"
         f_print = 1
       end
     when "out"
       begin
         opcode = "001100"
-        dr = zeros_complete(dec_to_bin(0), 5)
-        sa = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sb = zeros_complete(dec_to_bin(0), 5)
+        rd = zeros_complete(dec_to_bin(regs[op1]),5)
+        rs = zeros_complete(dec_to_bin(0), 5)
+        rt = zeros_complete(dec_to_bin(0),5)
         type_inst = "r"
         f_print = 1
       end
     when "pop"
-      begin
+      begin # pop r2 sp 0
         opcode = "001010"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        im = zeros_complete(dec_to_bin(op3), 16)
-        type_inst = "i"
+        rd = zeros_complete(dec_to_bin(regs[op1]),5)
+        rs = zeros_complete(dec_to_bin(regs[op2]),5)
+        im = zeros_complete(dec_to_bin(0),16)
+        type_inst = "r"
         f_print = 1
       end
     when "push"
-      begin
+      begin # push r1 sp 0
         opcode = "001001"
-        dr = zeros_complete(dec_to_bin(regs[op1]), 5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        im = zeros_complete(dec_to_bin(op3), 16)
+        rd = zeros_complete(dec_to_bin(regs[op1]),5)
+        rs = zeros_complete(dec_to_bin(regs[op2]),5)
+        im = zeros_complete(dec_to_bin(0),16)
         type_inst = "i"
         f_print = 1
       end
     when "halt"
       begin
         opcode = "000001"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
+        rd = zeros_complete(dec_to_bin(0),5)
+        rs = zeros_complete(dec_to_bin(0),5)
+        rt = zeros_complete(dec_to_bin(0),5)
         type_inst = "r"
         f_print = 1
       end
     when "nop"
       begin
         opcode = "000000"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
+        rd = zeros_complete(dec_to_bin(0),5)
+        rs = zeros_complete(dec_to_bin(0),5)
+        rt = zeros_complete(dec_to_bin(0),5)
         type_inst = "r"
         f_print = 1
       end
     when "mov"
       begin
         opcode = "000110"
-        dr = zeros_complete(dec_to_bin(regs[op1]),5)
-        sa = zeros_complete(dec_to_bin(regs[op2]), 5)
-        im = zeros_complete(dec_to_bin(0),16)
-        type_inst = "i"
-        f_print = 1
-      end
-    when "syscall"
-      begin
-        opcode = "011001"
-        dr = zeros_complete(dec_to_bin(26), 5)
-        sa = zeros_complete(dec_to_bin(0), 5)
-        im = zeros_complete(dec_to_bin(op2),16)        
-        type_inst = "i"
-        f_print = 1 
-      end
-    when "setprocpc"
-      begin
-        opcode = "011010"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(op1),5)
-        sb = zeros_complete(dec_to_bin(op2),5)
-        type_inst = "r"
-        f_print = 1
-      end
-    when "enablewriteproc"
-       begin
-        opcode = "011011"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
-        type_inst = "r"
-        f_print = 1
-      end
-    when "enablereadproc"
-       begin
-        opcode = "011100"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
-        type_inst = "r"
-        f_print = 1
-      end
-     when "disablereadproc"
-       begin
-        opcode = "011101"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
-        type_inst = "r"
-        f_print = 1 
-      end
-    when "disablewriteproc"
-       begin
-        opcode = "011110"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(0),5)
-        sb = zeros_complete(dec_to_bin(0),5)
-        type_inst = "r"
-        f_print = 1 
-      end
-    when "setsopc"
-      begin
-        opcode = "011111"
-        dr = zeros_complete(dec_to_bin(0),5)
-        sa = zeros_complete(dec_to_bin(op1),5)
-        sb = zeros_complete(dec_to_bin(op2),5)
+        rd = zeros_complete(dec_to_bin(regs[op1]),5)
+        rs = zeros_complete(dec_to_bin(regs[op2]), 5)
+        rt = zeros_complete(dec_to_bin(0),5)
         type_inst = "r"
         f_print = 1
       end
@@ -394,14 +329,16 @@ File.open("assembly.txt").each do |line|
       f_print = 0
     end
      if(type_inst == "r")
-       bin = "#{opcode}#{sa}#{sb}#{dr}" # ok
+       bin = "#{opcode}#{rs}#{rt}#{rd}"
      elsif (type_inst == "i")
-       bin = "#{opcode}#{sa}#{dr}#{im}" # ok
+       bin = "#{opcode}#{rs}#{rt}#{im}"
+     elsif (type_inst == "j")
+       bin = "#{opcode}#{im}"
      end
 
      unless f_print == 0
        i_bin = inst_complete(bin)
-       instruction = "InstMem[#{count_line}] <= 32'b#{i_bin}; //#{text.join(" ")}"
+       instruction = "MemInst[#{count_line}] = 32'b#{i_bin}; //#{text.join(" ")}"
        puts instruction
        count_line = count_line +1
      end
