@@ -338,7 +338,7 @@ File.open("assembly.txt").each do |line|
 
      unless f_print == 0
        i_bin = inst_complete(bin)
-       instruction = "MemInst[#{count_line}] = 32'b#{i_bin}; //#{text.join(" ")}"
+       instruction = "InstMem[#{count_line}] = 32'b#{i_bin}; //#{text.join(" ")}"
        puts instruction
        count_line = count_line +1
      end
