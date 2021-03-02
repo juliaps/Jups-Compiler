@@ -93,41 +93,37 @@ File.open("assembly.txt").each do |line|
   case op_inst
   when "add"
       begin
-        opcode = "000000"
+        opcode = "000010"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         rt = zeros_complete(dec_to_bin(regs[op3]), 5)
-        funct = "000000"
         type_inst = "r"
         f_print = 1
       end
     when "sub"
       begin
-        opcode = "000000"
+        opcode = "000011"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         rt = zeros_complete(dec_to_bin(regs[op3]), 5)
-        funct = "000001"
         type_inst = "r"
         f_print = 1
       end
     when "mult"
       begin
-        opcode = "000000"
+        opcode = "000100"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         rt = zeros_complete(dec_to_bin(regs[op3]), 5)
-        funct = "000010"
         type_inst = "r"
         f_print = 1
       end
     when "div"
       begin
-        opcode = "000000"
+        opcode = "000101"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         rt = zeros_complete(dec_to_bin(regs[op3]), 5)
-        funct = "000011"
         type_inst = "r"
         f_print = 1
       end
@@ -153,7 +149,7 @@ File.open("assembly.txt").each do |line|
       end
     when "addi"
       begin
-        opcode = "000010"
+        opcode = "010100"
         rt = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
@@ -171,7 +167,7 @@ File.open("assembly.txt").each do |line|
       end
     when "subi"
       begin
-        opcode = "010100"
+        opcode = "010101"
         rt = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
@@ -180,25 +176,25 @@ File.open("assembly.txt").each do |line|
       end
     when "j"
       begin
-        opcode = "000101"
+        opcode = "001110"
         endr = labels[op1].to_i
         rd = zeros_complete(dec_to_bin(0), 10)
         rs = zeros_complete(dec_to_bin(endr),16)
         type_inst = "j"
         f_print = 1
       end
-    when "lw"
+    when "load"
       begin
-        opcode = "000110"
+        opcode = "000111"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
         type_inst = "i"
         f_print = 1
       end
-    when "sw"
+    when "store"
       begin # r1 r2 5
-        opcode = "000111"
+        opcode = "001000"
         rd = zeros_complete(dec_to_bin(regs[op1]), 5)
         rs = zeros_complete(dec_to_bin(regs[op2]), 5)
         im = zeros_complete(dec_to_bin(op3), 16)
@@ -207,7 +203,7 @@ File.open("assembly.txt").each do |line|
       end
     when "jr"
       begin
-        opcode = "010011"
+        opcode = "001101"
         rd = zeros_complete(dec_to_bin(0), 5)
         rs = zeros_complete(dec_to_bin(regs[op1]), 5)
         rt = zeros_complete(dec_to_bin(0), 5)

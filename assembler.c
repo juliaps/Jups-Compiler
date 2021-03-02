@@ -183,63 +183,20 @@ void cAssembly(Quadruple  q){
       break;
       case CALL:
         if(strcmp("input", q->op1->contents.variable.name) == 0){
-          if(select_compilation) { //program
-            //syscall
-            
-           // printf("   loadi r16 2\n");
-           // linha++;
-            // uma instrucao para alterar a  flag e executar o so
-            printf("   disablewriteproc\n"); 
-            linha++;
-            printf("   syscall 2\n"); // altera a flag e escreve no registrador do so
-            linha++;
-            printf("   loadi r15 proximo_pc\n"); //escrever no banco de registrador do so o pc atual do processo atual
-            //verificar se é o proximo pc mesmo pq ele pode pegar e somar e ir ja pro proximo
-            linha++;
-            printf("   setsopc r15 r30\n");
-            linha++;
-            printf("   mov %s r26\n", q->op3->contents.variable.name); // registrador que armazena o retorno da funcao input
-            linha++;
-          } else { // so
-            printf("   in %s\n", q->op3->contents.variable.name);
-            linha++;
-            printf("   out %s\n", q->op3->contents.variable.name); //so pra teste
-            linha++;
-          }
           
+          printf("   in %s\n", q->op3->contents.variable.name);
+          linha++;
+          printf("   out %s\n", q->op3->contents.variable.name); //so pra teste
+          linha++;
           
         } else if (strcmp("output", q->op1->contents.variable.name) == 0){
-          if(select_compilation) { // program
-            //syscall
-            //printf("  loadi r16 3\n");
-            //linha++;
-            printf("   disablewriteproc\n");
-            linha++; 
-            printf("   pop r14 r31 0\n");
-            linha++;
-            printf("   enablewriteproc\n");
-            linha++;
-            printf("   subi r31 r31 1\n");
-            linha++;
-            // uma instrucao para alterar a  flag e executar o so 
-            printf("   disablewriteproc\n"); 
-            linha++;
-            printf("   syscall 3\n"); // altera a flag e escreve no registrador do so
-            linha++;
-            printf("   loadi r15 proximo_pc\n"); //escrever no banco de registrador do so o pc atual do processo atual
-            linha++;
-            //verificar se é o proximo pc mesmo pq ele pode pegar e somar e ir ja pro proximo
-            printf("   setsopc r15 r30\n");
-            linha++;
-
-          } else {
+          
             printf("   pop r28 r31 0\n");
             linha++;
             printf("   subi r31 r31 1\n");
             linha++;
             printf("   out r28\n"); //testar no fpga
             linha++;
-          }
            
             //printf("   out r%d\n", p_reg); //rever to confusa
             //p_reg = (p_reg + 1)%n;
@@ -275,24 +232,6 @@ void cAssembly(Quadruple  q){
           
           printf("   disablereadproc\n");
           linha++;
-        } else if (strcmp("getinterruption", q->op1->contents.variable.name) == 0){
-          printf("   mov %s r26\n", q->op3->contents.variable.name); //r26 reg que armazena as interrupçoes
-          linha++;
-        } else if (strcmp("getoutput", q->op1->contents.variable.name) == 0){
-          printf("   mov %s r14 \n", q->op3->contents.variable.name); // r14 reg que armazena i/o processos
-          linha++;
-        } else if (strcmp("setinput", q->op1->contents.variable.name) == 0){
-          printf("   pop r14 r31 0\n"); // pega o parametro ou seja a entrada
-          linha++;
-          printf("   subi r31 r31 1\n");
-          linha++;
-          printf("   enablewriteproc\n"); //pra salvar no banco de registradores do programa em execução
-          linha++;
-          printf("   mov r26 r14\n"); //copia a entrada pro reg que armazena i/o processos
-          linha++;
-          printf("   disablewriteproc\n");
-          linha++;
-          //dar um load pra uma posicao especifica da memoria ?
         } else if (strcmp("getpc", q->op1->contents.variable.name) == 0){
           printf("   mov %s r15\n", q->op3->contents.variable.name); //r15 reg salva o pc do processo atual
           linha++;

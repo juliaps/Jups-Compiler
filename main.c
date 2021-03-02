@@ -79,14 +79,14 @@ int main( int argc, char * argv[] ) {
     exit(1);
   }
   listing = stdout; /* send listing to screen */
-  //fprintf(listing,"\nC- COMPILATION: %s\n",pgm);
+  fprintf(listing,"\nC- COMPILATION: %s\n",pgm);
 #if NO_PARSE
   while (getToken()!=ENDFILE);
 #else
   syntaxTree = parse();
   if (TraceParse) {
-    //fprintf(listing,"\nArvore Sintatica:\n");
-    //printTree(syntaxTree);
+    fprintf(listing,"\nArvore Sintatica:\n");
+    printTree(syntaxTree);
   }
 #if !NO_ANALYZE
   if (! Error)

@@ -1,0 +1,57 @@
+/* Jups Operating System */
+
+void main(void){
+
+  int procstatus[2];
+  int procpc[2];
+  int procmemstart[2];
+  int currentprocess;
+
+  /* Define o status inicia de cada processo */
+  procstatus[0] = 0;
+  procstatus[1] = 0;
+
+  /* Define a instrucao onde inicia cada processo */
+  procpc[0] = 200;
+  procpc[1] = 300;
+
+  /* Define a posicao de memoria de cada processo */
+  procmemstart[0] = 200;
+  procmemstart[1] = 300;
+
+  /* Define o primeiro processo */
+  currentprocess = 0;
+
+  /* Inicia a execução do primeiro processo */
+  setpc(procpc[currentprocess]);
+
+  /* Troca de contexto */
+
+  /* Salva as informações do processo atual */
+  getpc(procpc[currentprocess]);
+  getprocstatus(procstatus[currentprocess]);
+  cpyrbtomem(procmemstart[currentprocess]);
+
+  /* Selecionar qual processo será executado */
+  /* Se o processo ainda não acabou executa o novo processo */
+  /* Caso contrario continua executando o anterior*/
+  if(currentprocess == 0) {
+    if(procstatus[1] == 0) {
+      currentprocess = 1;
+    }
+  } else {
+    if(procstatus[0] == 0) {
+      currentprocess = 0;
+    }
+  }
+
+  if(procstatus[currentprocess] == 0) {
+    /* Carrega as informações do novo processo a ser executado */
+
+    cpymemtorb(procmemstart[currentprocess]);
+    setpc(procpc[currentprocess]);
+  }
+
+  return;
+
+}
