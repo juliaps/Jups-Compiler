@@ -2,56 +2,70 @@
 
 void main(void){
 
-  int procstatus[2];
-  int procpc[2];
-  int procmemstart[2];
+  int fatstatus;
+  int expstatus;
+  int fatpc;
+  int exppc;
+  int fatmemstart;
+  int expmemstart;
   int currentprocess;
 
   /* Define o status inicia de cada processo */
-  procstatus[0] = 0;
-  procstatus[1] = 0;
+  fatstatus = 0;
+  expstatus = 0;
 
   /* Define a instrucao onde inicia cada processo */
-  procpc[0] = 200;
-  procpc[1] = 300;
+  fatpc = 239;
+  exppc = 261;
 
   /* Define a posicao de memoria de cada processo */
-  procmemstart[0] = 200;
-  procmemstart[1] = 300;
+  fatmemstart = 15;
+  expmemstart = 53;
 
   /* Define o primeiro processo */
-  currentprocess = 0;
+  currentprocess = 1;
 
   /* Inicia a execução do primeiro processo */
-  setpc(procpc[currentprocess]);
+  setpc(fatpc);
 
   /* Troca de contexto */
 
+  startcontextswitch();
+
   /* Salva as informações do processo atual */
-  getpc(procpc[currentprocess]);
-  getprocstatus(procstatus[currentprocess]);
-  cpyrbtomem(procmemstart[currentprocess]);
+  if(currentprocess == 1) {
+    fatpc = getpc();
+    fatstatus = getprocstatus();
+    cpyrbtomem(fatmemstart);
+  } else {
+    exppc = getpc();
+    expstatus = getprocstatus();
+    cpyrbtomem(expmemstart);
+  }
 
   /* Selecionar qual processo será executado */
   /* Se o processo ainda não acabou executa o novo processo */
   /* Caso contrario continua executando o anterior*/
-  if(currentprocess == 0) {
-    if(procstatus[1] == 0) {
-      currentprocess = 1;
+  if(currentprocess == 1) {
+    if(expstatus == 0) {
+      currentprocess = 2;
     }
   } else {
-    if(procstatus[0] == 0) {
-      currentprocess = 0;
+    if(fatstatus == 0) {
+      currentprocess = 1;
     }
   }
 
-  if(procstatus[currentprocess] == 0) {
-    /* Carrega as informações do novo processo a ser executado */
-
-    cpymemtorb(procmemstart[currentprocess]);
-    setpc(procpc[currentprocess]);
+  /* Carrega as informações do novo processo a ser executado */
+  if(currentprocess == 1) {
+    if(fatstatus == 0) {
+      cpymemtorb(fatmemstart);
+      setpc(fatpc);
+    }
+  } else {
+    if(expstatus == 0){
+      cpymemtorb(expmemstart);
+      setpc(exppc);
+    }
   }
-
-  return;
-
 }

@@ -1,19 +1,229 @@
-   mov r0 r31
-   j main
 main
-   addi r31 r31 1
-   push r28
-   in r31
-   out r31
-   load r1 r0 1 
-   store t0 r0 1 
-   in r31
-   out r31
-   load r2 r0 2 
-   store t1 r0 2 
-   load r3 r0 1 
-   load r4 r0 2 
-   add t2 r3 r4 
-   load r5 r0 3 
-   store t2 r0 3 
+   loadi r2 0
+   store r2 r0 1 
+   loadi r3 0
+   store r3 r0 2 
+   loadi r4 224
+   store r4 r0 3 
+   loadi r5 246
+   store r5 r0 4 
+   loadi r6 15
+   store r6 r0 5 
+   loadi r7 53
+   store r7 r0 6 
+   loadi r8 1
+   store r8 r0 7 
+   load r28 r0 3
+   enablewriteproc
+   mov r26 r28
+   disablewriteproc
+   exec_proc
+   exec_so
+   disablereadproc
+   disablewriteproc
+   load r8 r0 7
+   loadi r9 1
+   bneq r8 r9 L1
+   enablereadproc
+   mov t2 r26
+   mov r26 r26
+   disablereadproc
+   store t2 r0 3
+   enablereadproc 
+   mov t3 r25
+   mov r25 r25
+   disablereadproc
+   store t3 r0 1 
+   load r28 r0 5
+   enablereadproc
+   store r0 r28 0
+   store r1 r28 1
+   store r2 r28 2
+   store r3 r28 3
+   store r4 r28 4
+   store r5 r28 5
+   store r6 r28 6
+   store r7 r28 7
+   store r8 r28 8
+   store r9 r28 9
+   store r10 r28 10
+   store r11 r28 11
+   store r12 r28 12
+   store r13 r28 13
+   store r14 r28 14
+   store r15 r28 15
+   store r16 r28 16
+   store r17 r28 17
+   store r18 r28 18
+   store r19 r28 19
+   store r20 r28 20
+   store r21 r28 21
+   store r22 r28 22
+   store r23 r28 23
+   store r24 r28 24
+   store r25 r28 25
+   store r26 r28 26
+   store r27 r28 27
+   store r28 r28 28
+   store r29 r28 29
+   store r30 r28 30
+   store r31 r28 31
+   disablereadproc
+   j L2
+label L1
+   enablereadproc
+   mov t5 r26
+   mov r26 r26
+   disablereadproc
+   store t5 r0 4 
+   enablereadproc
+   mov t6 r25
+   mov r25 r25
+   disablereadproc
+   store t6 r0 2 
+   load r28 r0 6
+   enablereadproc
+   store r0 r28 0
+   store r1 r28 1
+   store r2 r28 2
+   store r3 r28 3
+   store r4 r28 4
+   store r5 r28 5
+   store r6 r28 6
+   store r7 r28 7
+   store r8 r28 8
+   store r9 r28 9
+   store r10 r28 10
+   store r11 r28 11
+   store r12 r28 12
+   store r13 r28 13
+   store r14 r28 14
+   store r15 r28 15
+   store r16 r28 16
+   store r17 r28 17
+   store r18 r28 18
+   store r19 r28 19
+   store r20 r28 20
+   store r21 r28 21
+   store r22 r28 22
+   store r23 r28 23
+   store r24 r28 24
+   store r25 r28 25
+   store r26 r28 26
+   store r27 r28 27
+   store r28 r28 28
+   store r29 r28 29
+   store r30 r28 30
+   store r31 r28 31
+   disablereadproc
+label L2
+   load r13 r0 7
+   loadi r1 1
+   bneq r13 r1 L3
+   load r1 r0 2
+   loadi r2 0
+   bneq r1 r2 L4
+   beq t9 r0 L4
+   loadi r3 2
+   store r3 r0 7 
+label L4
+   j L5
+label L3
+   load r3 r0 1
+   loadi r4 0
+   bneq r3 r4 L6
+   loadi r5 1
+   store r5 r0 7 
+label L6
+label L5
+   load r5 r0 7
+   loadi r6 1
+   bneq r5 r6 L7
+   load r6 r0 1
+   loadi r7 0
+   bneq r6 r7 L8
+   load r28 r0 5
+   enablewriteproc
+   load r0 r28 0
+   load r1 r28 1
+   load r2 r28 2
+   load r3 r28 3
+   load r4 r28 4
+   load r5 r28 5
+   load r6 r28 6
+   load r7 r28 7
+   load r8 r28 8
+   load r9 r28 9
+   load r10 r28 10
+   load r11 r28 11
+   load r12 r28 12
+   load r13 r28 13
+   load r14 r28 14
+   load r15 r28 15
+   load r16 r28 16
+   load r17 r28 17
+   load r18 r28 18
+   load r19 r28 19
+   load r20 r28 20
+   load r21 r28 21
+   load r22 r28 22
+   load r23 r28 23
+   load r24 r28 24
+   load r25 r28 25
+   load r26 r28 26
+   load r27 r28 27
+   load r28 r28 28
+   load r29 r28 29
+   load r30 r28 30
+   load r31 r28 31
+   disablewriteproc
+   load r28 r0 3
+   mov r26 r28
+   exec_proc
+label L8
+   j L9
+label L7
+   load r7 r0 2
+   loadi r8 0
+   bneq r7 r8 L10
+   load r28 r0 6
+   enablewriteproc
+   load r0 r28 0
+   load r1 r28 1
+   load r2 r28 2
+   load r3 r28 3
+   load r4 r28 4
+   load r5 r28 5
+   load r6 r28 6
+   load r7 r28 7
+   load r8 r28 8
+   load r9 r28 9
+   load r10 r28 10
+   load r11 r28 11
+   load r12 r28 12
+   load r13 r28 13
+   load r14 r28 14
+   load r15 r28 15
+   load r16 r28 16
+   load r17 r28 17
+   load r18 r28 18
+   load r19 r28 19
+   load r20 r28 20
+   load r21 r28 21
+   load r22 r28 22
+   load r23 r28 23
+   load r24 r28 24
+   load r25 r28 25
+   load r26 r28 26
+   load r27 r28 27
+   load r28 r28 28
+   load r29 r28 29
+   load r30 r28 30
+   load r31 r28 31
+   disablewriteproc
+   load r28 r0 4
+   mov r26 r28
+   exec_proc
+label L10
+label L9
    halt

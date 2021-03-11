@@ -6,8 +6,8 @@ void main(void) {
 
 	i = 0;
 	result = 1;
-	num = input();
-	exp = input();
+	num = 2;
+	exp = 8;
 
 	while(i < exp) {
 		result = num * result;

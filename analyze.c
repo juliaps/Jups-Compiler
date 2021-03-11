@@ -138,7 +138,8 @@ static void insertNode( TreeNode * t)
              strcmp(t->attr.name, "getpc") == 0 ||
              strcmp(t->attr.name, "cpyrbtomem") == 0 ||
              strcmp(t->attr.name, "getprocstatus") == 0 ||
-             strcmp(t->attr.name, "cpymemtorb") == 0) { //ADICIONAR AS NOVAS FUNCOES
+             strcmp(t->attr.name, "cpymemtorb") == 0 ||
+             strcmp(t->attr.name, "startcontextswitch") == 0) { //ADICIONAR AS NOVAS FUNCOES
                 if (st_lookup(t->attr.name , escopo) == -1){
                   //primeira vez que a funcao foi chamada
                   st_insert(t->attr.name, t->lineno, location, escopo, FUN, Void);

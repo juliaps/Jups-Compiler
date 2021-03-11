@@ -460,7 +460,7 @@ void codeGen(TreeNode * syntaxTree, char * codefile) {
       //printf("\n**************************** Código Intermediário ****************************\n\n");
       printIntermediateCode();
       //printf("\n*************************Código Assembly************************\n\n");
-      printf("   mov r0 r31\n");
-      printf("   j main\n");
+      //printf("   mov r0 r31\n");
+      //printf("   j main\n");
       cAssembly(getCodigoIntermediario());
 }

@@ -9,6 +9,8 @@
 #include "cgen.h"
 #include "assembler.h"
 
+#define MAX_REG 14
+
 ///CODIGO ASSEMBLY VAI FICAR COM ORDEM : RESULTADO E OPERADORES
 int p_reg = 1;
 int p_mem;
@@ -42,7 +44,7 @@ void tipo_r(Quadruple q, char *inst){
             vet[i] = p_reg;
             printf("   load r%d r0 %d \n", vet[i], p_mem); // carrega da memoria pro registrador
             linha++;
-            p_reg = (p_reg + 1)%n;
+            p_reg = (p_reg + 1)%MAX_REG;
             if(p_reg == 0) p_reg = 1;
           }
           else if (flag == 1) {
@@ -118,7 +120,7 @@ void salto_cond(Quadruple q, char *inst){
             vet[i] = p_reg;
             printf("    load r%d r0 %d\n", vet[i], p_mem); // carrega da memoria para o registrador
             linha++;
-            p_reg = (p_reg + 1)%n;
+            p_reg = (p_reg + 1)%MAX_REG;
             if(p_reg == 0) p_reg = 1;
           }
           else if (flag == 1) {
@@ -191,15 +193,15 @@ void cAssembly(Quadruple  q){
           
         } else if (strcmp("output", q->op1->contents.variable.name) == 0){
           
-            printf("   pop r28 r31 0\n");
-            linha++;
-            printf("   subi r31 r31 1\n");
-            linha++;
+            // printf("   pop r28 r31 0\n");
+            // linha++;
+            // printf("   subi r31 r31 1\n");
+            // linha++;
             printf("   out r28\n"); //testar no fpga
             linha++;
            
             //printf("   out r%d\n", p_reg); //rever to confusa
-            //p_reg = (p_reg + 1)%n;
+            //p_reg = (p_reg + 1)%MAX_REG;
           if(p_reg == 0) p_reg = 1;
            //linha++;
         } else if (strcmp("cpymemtorb", q->op1->contents.variable.name) == 0){ // posso usar a mesma instrucao e usar a flag do so pra definir em qual banco vai escrever 
@@ -207,10 +209,18 @@ void cAssembly(Quadruple  q){
           //printf("   subi r31 r31 0\n");
           printf("   enablewriteproc\n"); // para permitir o deslocamento da posicao do banco de registradores
           linha++;
+
+          // printf("   pop r28 r31 0\n");
+          // linha++;
+          // printf("   subi r31 r31 1\n");
+          // linha++;
+
          // printf("   pop r13 r31 0\n"); // pega a posicao da memoria que vai copiar 
           count = 0;
           while(count < 32) {
-              printf("   load r%d r0 %d\n", count, (current_program + count));
+              // printf("   addi r28 r28 1\n");
+              // linha++;
+              printf("   load r%d r28 %d\n", count, count);
               linha++;
               count++;
           } 
@@ -223,9 +233,14 @@ void cAssembly(Quadruple  q){
           linha++;
           //printf("   pop r13 r31 0\n"); // pega a posicao do rb que vai copiar
           //printf("   store r13 r14 0\n");
+          // printf("   pop r28 r31 0\n");
+          // linha++;
+          // printf("   subi r31 r31 1\n");
           count = 0;
           while (count < 32) {
-            printf("   store r%d r0 %d\n", count, (current_program + count));
+            // printf("   addi r28 r28 1\n");
+            // linha++;
+            printf("   store r%d r28 %d\n", count, count);
             linha++;
             count++;  
           }
@@ -233,21 +248,39 @@ void cAssembly(Quadruple  q){
           printf("   disablereadproc\n");
           linha++;
         } else if (strcmp("getpc", q->op1->contents.variable.name) == 0){
-          printf("   mov %s r15\n", q->op3->contents.variable.name); //r15 reg salva o pc do processo atual
+          printf("  enablereadproc \n");
+          linha++;
+          printf("   mov %s r26\n", q->op3->contents.variable.name); //r15 reg salva o pc do processo atual
+          linha++;
+          printf("   disablereadproc\n");
           linha++;
         } else if (strcmp("setpc", q->op1->contents.variable.name) == 0){
-          printf("   pop r15 r31 0\n"); //pega o parametro e copia pro reg que salva o pc do processo atual
-          linha++;
-          printf("   subi r31 r31 1\n");
-          linha++;
-        } else if (strcmp("execprocess", q->op1->contents.variable.name) == 0) {
-          printf("   loadi r30 proximo_pc\n"); //salva o pc do so 
-          linha++;
-          printf("   setprocpc r15 r30\n");
-          linha++;
+          // printf("   pop r26 r31 0\n"); //pega o parametro e copia pro reg que salva o pc do processo atual
+          // linha++;
+          // printf("   subi r31 r31 1\n");
+          // linha++;
           printf("   enablewriteproc\n");
           linha++;
+          printf("   mov r26 r28\n");
+          linha++;
+          printf("   disablewriteproc\n");
+          linha++;
+          printf("   exec_proc\n");
+          linha++;
+        } else if (strcmp("getprocstatus", q->op1->contents.variable.name) == 0) {
           printf("   enablereadproc\n");
+          linha++;
+          printf("   mov %s r25\n", q->op3->contents.variable.name); //salva o status do processo
+          linha++;
+          printf("   disablereadproc\n");
+          linha++;
+        } else if(strcmp("startcontextswitch", q->op1->contents.variable.name) == 0) {
+
+          printf("   exec_so\n");
+          linha++;
+          printf("   disablereadproc\n");
+          linha++;
+          printf("   disablewriteproc\n");
           linha++;
         } else {
           //pc_salvo = linha + 4;
@@ -275,14 +308,10 @@ void cAssembly(Quadruple  q){
           printf("   loadi r28 %d\n", q->op1->contents.val);
           linha++;
         }
-        printf("   addi r31 r31 1\n");
-        linha++;
-        printf("   push r28 r31 0\n");
-        linha++;
-         if(strcmp(q->op2->contents.variable.name,"cpyrbtomem") == 0 || 
-            strcmp(q->op2->contents.variable.name, "cpymemtorb") == 0) {
-           current_program = q->op1->contents.val;
-         }
+        // printf("   addi r31 r31 1\n");
+        // linha++;
+        // printf("   push r28 r31 0\n");
+        // linha++; // como todos so tem um parametro nao é necessario usar a pilha
         
       break;
       case RTN:
@@ -309,12 +338,8 @@ void cAssembly(Quadruple  q){
       break;
       case HALT:
         if(select_compilation) { // program
-          //printf("   loadi r16 1\n");
-          //linha++;
-          // uma instrucao para alterar a  flag e executar o so 
-          printf("   syscall 1\n");
-          linha++;
-          printf("   setsopc r15 r30\n");
+          // a instrução altera o status do programa
+          printf("   halt_proc \n");
           linha++;
         } else { // so
           printf("   halt\n");  
@@ -348,7 +373,7 @@ void cAssembly(Quadruple  q){
         printf("%s\n", q->op1->contents.variable.name );
         int k = 0;
         int p = params(q->op1->contents.variable.name);
-        while(k < p){
+        while(k < p){ //se tiver mais de um parametro precisa atribuir pra variavel enquanto tira
           printf("   pop r28 r31 0\n");
           linha++;
           printf("   subi r31 r31 1\n");
@@ -396,7 +421,7 @@ void cAssembly(Quadruple  q){
             printf("   load r%d r0 %d \n", p_reg, p_mem);
             linha++;
             printf("   store r%d %s 0\n", p_reg, q->op1->contents.variable.name);
-            p_reg = (p_reg + 1)%n;
+            p_reg = (p_reg + 1)%MAX_REG;
             if(p_reg == 0) p_reg = 1;
             linha++;
           } else {
@@ -408,7 +433,7 @@ void cAssembly(Quadruple  q){
           linha++;
           printf("   store r%d %s 0\n", p_reg, q->op1->contents.variable.name);
           linha++;
-          p_reg = (p_reg + 1)%n;
+          p_reg = (p_reg + 1)%MAX_REG;
           if(p_reg == 0) p_reg = 1;
         }
       break;
